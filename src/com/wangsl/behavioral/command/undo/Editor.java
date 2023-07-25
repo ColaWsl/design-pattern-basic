@@ -6,10 +6,12 @@ import java.util.Deque;
 public class Editor {
 	private StringBuilder content;
 	private Deque<Command> history;
+	private Deque<Command> redoHistory;
 
 	public Editor(){
 		this.content = new StringBuilder();
 		this.history = new ArrayDeque<>();
+		this.redoHistory = new ArrayDeque<>();
 	}
 
 	public void insert(String text){
@@ -26,16 +28,19 @@ public class Editor {
 		}
 	}
 
-	//  撤销
+	// 撤销
 	public void undo(){
 		if(!history.isEmpty()){
 			Command command = history.pop();
+			redoHistory.push(command);
 			command.undo();
 		}
 	}
 
+	// 重做
 	public void redo(){
-
+		Command command = redoHistory.poll();
+		command.undo();
 	}
 
 	public void printContent(){

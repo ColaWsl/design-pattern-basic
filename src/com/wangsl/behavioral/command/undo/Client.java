@@ -13,5 +13,7 @@ public class Client {
 		editor.undo();
 		editor.printContent();
 
+		editor.undo();
+		editor.printContent();
 	}
 }
